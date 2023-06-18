@@ -61,4 +61,4 @@ It makes sense to use MongoDB for this project since the records are simple and 
 ### NLTK (Natural Language Toolkit) VADER (Valence Aware Dictionary and sEntiment Reasoner) 🌠
 > NLTK VADER is a rule-based sentiment analysis tool specifically designed for analyzing sentiment in text. It is part of the NLTK library, a popular Python package for natural language processing.
 
-The body of each email is analyzed by the `SentimentIntensityAnalyzer` and a new field called `sentiment` is added with the derived sentiment (via the compound score) of each email. 
+The body of each email is analyzed by the `SentimentIntensityAnalyzer` and a new field called `sentiment` is added with the derived sentiment (via the compound score) of each email. Once a file has been processed for sentiment, its contents are ready to be inserted into the `emails` collection.
