@@ -36,7 +36,9 @@ This project uses the `BashOperator` to run the tasks in the DAGs by executing t
 ### Docker 🐋 & Docker Compose 🐙
 
 #### Docker 🐋
-> A Docker container is a lightweight and isolated executable unit that encapsulates an application and its dependencies, including libraries, binaries, and configuration files. This project uses Docker extensively to make the application portable and consistent. 
+> A Docker container is a lightweight and isolated executable unit that encapsulates an application and its dependencies, including libraries, binaries, and configuration files.
+
+This project uses Docker extensively to make the application portable and consistent.
 
 The `Dockerfile` included here merely extends the `apache/airflow` image to include the Python library dependencies needed for this project.
 
