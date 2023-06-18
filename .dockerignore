@@ -100,3 +100,5 @@ plugins/
 dags/
 processes/
 parquet/
+LICENSE
+README.md
