@@ -1,5 +1,5 @@
 <h1 align="center">
-Email Processing Pipeline
+📧 Email Processing Pipeline
 </h1>
 
 An email processing pipeline that collects unread emails from a dedicated product feedback inbox, analyzes the content of the emails for sentiment, and uploads the records to a MongoDB database.
