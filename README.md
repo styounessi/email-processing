@@ -4,7 +4,7 @@ Email Processing Pipeline 📧
 
 An email processing pipeline that collects unread emails from a dedicated product feedback inbox, analyzes the content of the emails for sentiment, and uploads the records to a MongoDB database.
 
-![Flow](https://i.imgur.com/77Y1hnc.png)
+![Flow](https://i.imgur.com/nfMWhyR.png)
 
 ## What's the idea? 🤔
 The idea behind this project is to automate the process of collecting customer/user feedback submissions via email and storing the data for sentiment analysis. The pipeline follows these general steps:
