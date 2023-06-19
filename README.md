@@ -6,7 +6,7 @@ An email processing pipeline that collects unread emails from a dedicated produc
 
 ![Flow](https://i.imgur.com/77Y1hnc.png)
 
-## What's the idea? 
+## What's the idea? 🤔
 The idea behind this project is to automate the process of collecting customer/user feedback submissions via email and storing the data for sentiment analysis. The pipeline follows these general steps:
 
 1. Check the designated inbox (e.g., Gmail) on a daily basis.
@@ -18,15 +18,15 @@ The idea behind this project is to automate the process of collecting customer/u
 ⚠️ Please note that this project is designed for fun/interest and **will not** reflect real-world implementation requirements.
 
 ## Technologies/Services
-### Apache Airflow
+### Apache Airflow ♻️
 Apache Airflow is an open-source platform for programmatically orchestrating workflows. Airflow can be as complex or simple as you like and generally follows the following architecture:
 
 - 🕑 Scheduler, which handles both triggering scheduled workflows, and submitting Tasks to the executor to run.
-- 🧑‍🏭 Executor & Worker, which handles running tasks.
+- 👷‍♂️ Executor & Worker, which handles running tasks.
 - 💻 Webserver, which presents a UI to inspect, trigger and debug the behaviour of DAGs (more on this below) and tasks.
 - 💾 Metadata database, used by the different services above.
 
-#### DAGs 
+#### DAGs 🔄
 Directed Acyclic Graphs (DAGs) are the core concept of Airflow, representing workflows with tasks and dependencies. In this project, the tasks are executed using the `BashOperator` to run the `.py` files directly.
 
 > The DAG itself doesn’t care about what is happening inside the tasks; it is merely concerned with how to execute them - the order to run them in, how many times to retry them, if they have timeouts, and so on.
