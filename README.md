@@ -43,7 +43,7 @@ This project uses Docker to ensure portability and consistency. The included `Do
 
 The `docker-compose.yml` file included here defines the multi-container environment for running Airflow with PostgreSQL, Redis, and MongoDB included as supporting services. 
 
-The Airflow services inherit configurations defined in x-airflow-common, while also having their own individual configurations specific to each service.
+The Airflow services inherit configurations defined in `x-airflow-common`, while also having their own individual configurations specific to each service.
 
 Volumes `postgres-db-volume` and `mongodb-volume` are defined to enable data persistence in containers. Since containers are inherently ephemeral, these volumes ensure that data persists beyond the lifespan of any individual container.
 
