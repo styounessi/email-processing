@@ -63,7 +63,7 @@ def main():
     except BulkWriteError as bwe:
         print(bwe.details)
     else:
-        print('Inserted records successfully.')
+        print('No duplicates detected.')
 
 if __name__ == '__main__':
     main()
