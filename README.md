@@ -49,16 +49,16 @@ Volumes `postgres-db-volume` and `mongodb-volume` are defined to enable data per
 
 Everything is spun up together using `docker compose up` when ready. 
 
-### MongoDB 🥬
-> MongoDB is a popular open-source NoSQL database that uses a flexible document model, known as BSON, for data storage. It is designed for scalability, high performance, and ease of development, making it suitable for handling large amounts of unstructured or semi-structured data.
-
-It makes sense to use MongoDB for this project since the records are simple and have no relational complexities. They are inserted in the `productDB` under the `emails` collection. Collections do not enforce a schema, allowing for flexible and dynamic data structures.
-
-![Mongo](https://i.imgur.com/ih2RDY7.gif)
-
 ### NLTK (Natural Language Toolkit) VADER (Valence Aware Dictionary and sEntiment Reasoner) 🌠
 > NLTK VADER is a rule-based sentiment analysis tool specifically designed for analyzing sentiment in text. It is part of the NLTK library, a popular Python package for natural language processing.
 
 The content of each email is analyzed using the `SentimentIntensityAnalyzer` and the resulting sentiment is derived from its compound score. A new field called `sentiment` is then added to each email, recording the derived sentiment.
 
 Once a file has been processed for sentiment, its contents are ready to be inserted into the `emails` collection.
+
+### MongoDB 🥬
+> MongoDB is a popular open-source NoSQL database that uses a flexible document model, known as BSON, for data storage. It is designed for scalability, high performance, and ease of development, making it suitable for handling large amounts of unstructured or semi-structured data.
+
+It makes sense to use MongoDB for this project since the records are simple and have no relational complexities. They are inserted in the `productDB` under the `emails` collection. Collections do not enforce a schema, allowing for flexible and dynamic data structures.
+
+![Mongo](https://i.imgur.com/ih2RDY7.gif)
