@@ -53,17 +53,19 @@ def main():
                             unique=True)
 
     '''
-    The idea below is to catch duplicate records from being inserted again. If a 
-    BulkWriteError does happen, the parquet file should be investigated
-    for duplicates compared to what already exists in the "emails" collection. 
+    The idea below is to catch existing records from being inserted again. If a 
+    'BulkWriteError' does happen, it will print which record(s) were caught so
+    they can be investigated further.
     '''
 
     try:
-        collection.insert_many(records, ordered=False)
+        insertion = collection.insert_many(records, ordered=False)
+        num_records = len(insertion.inserted_ids)
     except BulkWriteError as bwe:
+        num_records = bwe.details['nInserted']
         print(bwe.details)
-    else:
-        print('No duplicates detected.')
+
+    print(f'Total records inserted: {num_records}.')
 
 if __name__ == '__main__':
     main()
