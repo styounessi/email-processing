@@ -15,7 +15,8 @@ The idea behind this project is to automate the process of collecting customer/u
 4. Insert the fully processed records into a [MongoDB](https://www.mongodb.com/docs/manual/core/databases-and-collections/) database.
 5. Remove parquet files that are older than the retention period. 
 
-⚠️ Please note that this project is designed for fun/interest and **will not** reflect real-world implementation requirements.
+⚠️ Please note that this project is designed for fun/interest and **will not** reflect real-world implementation. Certain components like `triggerer`, `cli`, and `flower` have been intentionally omitted to prioritize lightweight development. These components are typically included in more comprehensive Airflow environments.
+
 
 ## Technologies/Services
 ### Apache Airflow ♻️
