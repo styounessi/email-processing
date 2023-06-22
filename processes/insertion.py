@@ -43,8 +43,7 @@ def main():
     df = read_latest_file()
     collection = mongo_collection()
 
-    # This is an inelegant and temporary solution that should be replaced at some point
-    records = df.to_pandas().to_dict(orient='records') 
+    records = df.to_dicts()
     
     combined_fields = ['from', 'subject', 'date']
 
