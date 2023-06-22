@@ -43,6 +43,7 @@ def parse_email(email_message):
     '''
     sender = email_message['From']
     subject = email_message['Subject']
+    date_sent = email_message['Date']
     email_body = ''
     
     for part in email_message.walk():
@@ -50,7 +51,6 @@ def parse_email(email_message):
             email_body = part.get_payload(decode=True).decode('utf-8').replace('\n\n', ' ')
             break
     
-    date_sent = email_message['Date']
     return {'from': sender, 'subject': subject, 'body': email_body, 'date': date_sent}
 
 def main():
