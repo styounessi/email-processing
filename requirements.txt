@@ -1,5 +1,3 @@
 nltk
-pandas
 polars
-pyarrow
 pymongo
