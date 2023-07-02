@@ -10,20 +10,21 @@ An email processing pipeline that collects unread emails from a dedicated produc
 The idea behind this project is to automate the process of collecting customer/user feedback submissions via email and storing the data for sentiment analysis. The pipeline follows these general steps:
 
 1. Check the designated inbox (e.g., Gmail) on a daily basis.
-2. Fetch new, unread emails and save the Sender, Subject line, Date/Time, and Body of the email(s) to a parquet file. 
+2. Fetch new, unread emails and save the Sender, Subject Line, Date/Time, and Body of the email(s) to a parquet file. 
 3. Perform sentiment analysis on the email content using [NLTK VADER](https://www.nltk.org/_modules/nltk/sentiment/vader.html).
 4. Insert the fully processed records into a [MongoDB](https://www.mongodb.com/docs/manual/core/databases-and-collections/) database.
 5. Remove parquet files that are older than the retention period. 
 
 ⚠️ Please note that this project is designed for fun/interest and **will not** reflect real-world implementation. Certain components like `triggerer`, `cli`, and `flower` have been intentionally omitted to prioritize lightweight development. These components are typically included in more comprehensive Airflow environments.
 
-
 ## Technologies/Services
 ### Apache Airflow ♻️
 Apache Airflow is an open-source platform for programmatically orchestrating workflows. Airflow can be as complex or simple as you like and generally follows the following architecture:
 
-- 🕑 Scheduler, which handles both triggering scheduled workflows, and submitting Tasks to the executor to run.
+- 🕑 Scheduler, which handles both triggering scheduled workflows, and submitting tasks to the executor to run.
 - 👷‍♂️ Executor & Worker, which handles running tasks.
+  - > Executors are the mechanism by which task instances get run. They have a common API and are “pluggable”, meaning you can swap executors based on your installation needs.
+  - Read more about [Executors and Executor Types](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/executor/index.html).
 - 💻 Webserver, which presents a UI to inspect, trigger and debug the behaviour of DAGs (more on this below) and tasks.
 - 💾 Metadata database, used by the different services above.
 
@@ -37,7 +38,7 @@ Directed Acyclic Graphs (DAGs) are the core concept of Airflow, representing wor
 #### Docker 🐋
 > A Docker container is a lightweight and isolated executable unit that encapsulates an application and its dependencies, including libraries, binaries, and configuration files.
 
-This project uses Docker to ensure portability and consistency. The included `Dockerfile` extends the `apache/airflow` image with the necessary Python library dependencies.
+This project uses Docker to ensure portability and consistency. The included `Dockerfile` extends the `apache/airflow` base image with necessary core Python libraries.
 
 #### Docker Compose 🐙
 > Docker Compose is a tool that was developed to help define and share multi-container applications. With Compose, we can create a YAML file to define the services and with a single command, can spin everything up or tear it all down.
@@ -46,7 +47,7 @@ The `docker-compose.yml` file included here defines the multi-container environm
 
 The Airflow services inherit configurations defined in `x-airflow-common`, while also having their own individual configurations specific to each service.
 
-Volumes `postgres-db-volume` and `mongodb-volume` are defined to enable data persistence in containers. Since containers are inherently ephemeral, these volumes ensure that data persists beyond the lifespan of any individual container.
+Volumes `postgres-db-volume` and `mongodb-volume` are defined as volumes to enable data persistence across containers. Since containers are inherently ephemeral, these volumes ensure that data persists beyond the lifespan of any individual container.
 
 Everything is spun up together using `docker compose up` when ready. 
 
