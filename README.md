@@ -33,6 +33,8 @@ Directed Acyclic Graphs (DAGs) are the core concept of Airflow, representing wor
 
 > The DAG itself doesn’t care about what is happening inside the tasks; it is merely concerned with how to execute them - the order to run them in, how many times to retry them, if they have timeouts, and so on.
 
+Read more about [DAGs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html) and [different types of Operators](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/operators.html). 
+
 ### Docker 🐋 & Docker Compose 🐙
 
 #### Docker 🐋
