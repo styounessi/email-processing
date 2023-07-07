@@ -1,3 +1,3 @@
-nltk
-polars
-pymongo
+nltk==3.8.1
+polars==0.18.2
+pymongo=4.3.3
