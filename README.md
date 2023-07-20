@@ -43,7 +43,7 @@ Read more about [DAGs](https://airflow.apache.org/docs/apache-airflow/stable/cor
 This project uses Docker to ensure portability and consistency. The included `Dockerfile` extends the `apache/airflow` base image with necessary core Python libraries.
 
 > **Note**
-> Please keep in mind that, despite the way the flow chart for this pipeline is depicted, <ins>each</ins> Airflow service is a separate Docker container. They are just grouped together visually because they are components of the same service. 
+> Please keep in mind that, despite the way the flow chart for this pipeline is depicted, <ins>each</ins> Airflow service is a separate Docker container. They are just grouped together visually because they are components of Airflow.
 
 #### Docker Compose 🐙
 > Docker Compose is a tool that was developed to help define and share multi-container applications. With Compose, we can create a YAML file to define the services and with a single command, can spin everything up or tear it all down.
