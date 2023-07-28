@@ -56,7 +56,6 @@ def sentiment_analysis(df):
     df = df.with_columns(pl.col('body').apply(lambda text: assign_sentiment \
                                              (sia.polarity_scores(text) \
                                              ['compound'])).alias('sentiment'))
-
     return df
 
 
