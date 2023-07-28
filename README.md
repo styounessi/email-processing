@@ -69,3 +69,14 @@ Once a file has been processed for sentiment, its contents are ready to be inser
 It makes sense to use MongoDB for this project since the records are simple and have no relational complexities. They are inserted in the `productDB` under the `emails` collection. Collections do not enforce a schema, allowing for flexible and dynamic data structures.
 
 ![Mongo](https://i.imgur.com/ih2RDY7.gif)
+
+Processed and stored records will look like this example once they are inserted into the collection:
+
+```
+_id: ObjectId("64c31ba93851089f36d47d67"),
+    from: 'Jane Smith <feedbackgiver123@proton.me>',
+    subject: 'Terrible service - very unhappy',
+    body: 'Your product and customer service is awful. I will never buy again!!!!',
+    date: 'Wed, 14 Jun 2023 00:56:52 +0000',
+    sentiment: 'Negative'
+```
