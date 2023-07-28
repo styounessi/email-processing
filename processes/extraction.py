@@ -4,13 +4,16 @@ import imaplib
 import datetime
 import polars as pl
 
+
 # Pull Gmail credentials via environment variables
 GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
 GMAIL_SERVER = 'imap.gmail.com'
 
+
 # Current date, for appending to parquet file
 timestamp = datetime.datetime.now().strftime('%Y%m%d')
+
 
 def connect_and_login(username, password):
     '''
@@ -19,6 +22,7 @@ def connect_and_login(username, password):
     mail_host = imaplib.IMAP4_SSL(GMAIL_SERVER)
     mail_host.login(username, password)
     return mail_host
+
 
 def get_unread_ids(mail_host):
     '''
@@ -29,6 +33,7 @@ def get_unread_ids(mail_host):
     unread_email_ids = unread[0].split()
     return unread_email_ids
 
+
 def fetch_email_content(mail_host, email_id):
     '''
     Fetches the content of the emails from within the inbox for each email ID.
@@ -36,6 +41,7 @@ def fetch_email_content(mail_host, email_id):
     _, data = mail_host.fetch(email_id, '(RFC822)')
     raw_email = data[0][1]
     return email.message_from_bytes(raw_email)
+
 
 def parse_email(email_message):
     '''
@@ -53,7 +59,8 @@ def parse_email(email_message):
     
     return {'from': sender, 'subject': subject, 'body': email_body, 'date': date_sent}
 
-def main():
+
+def process_unread_emails():
     '''
     Incorporates previous functions to pull unread emails and save their content
     as a parquet file with the date appended to the file name.
@@ -81,5 +88,6 @@ def main():
     
     mailbox.close()
 
+
 if __name__ == '__main__':
-    main()
+    process_unread_emails()
