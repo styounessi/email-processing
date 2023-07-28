@@ -5,11 +5,13 @@ import polars as pl
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+
 # Downloads vader lexicon if it does not exist locally
 nltk.download('vader_lexicon')
 
 # Path to parquet files
 PARQUET_FILE = '/opt/airflow/parquet/*.parquet'
+
 
 def read_latest_file():
     '''
@@ -25,6 +27,7 @@ def read_latest_file():
     df = pl.read_parquet(latest_file)
     return df
 
+
 def assign_sentiment(score):
     '''
     Assigns a sentiment label from the derived sentiment compound 
@@ -37,7 +40,8 @@ def assign_sentiment(score):
     else:
         return 'Neutral'
 
-def process_sentiment_analysis(df):
+
+def sentiment_analysis(df):
     '''
     Checks to see if the file has already been processed for sentiment.
     Performs sentiment analysis on the "body" column of the DataFrame and
@@ -55,15 +59,16 @@ def process_sentiment_analysis(df):
 
     return df
 
-def main():
+
+def derive_and_save_sentiment():
     '''
-    Main function to perform all of the tasks in the script and save
-    the result back to the parquet file. 
+    Derive sentiment from email(s) and save back to parquet file 
     '''
     df = read_latest_file()
-    df = process_sentiment_analysis(df)
+    df = sentiment_analysis(df)
     df.write_parquet(max(glob.glob(PARQUET_FILE), key=os.path.getctime))
     print('Sentiment analysis completed for new emails.')
 
+
 if __name__ == '__main__':
-    main()
+    derive_and_save_sentiment()
