@@ -49,7 +49,7 @@ with DAG(dag_id='parquet_cleaner',
          catchup=False
 ) as parquet_dag:
 
-    # Only a single task in in this dag
+    # Only a single task in this dag
     cleaner = BashOperator(
         task_id='cleaner',
         bash_command='python /opt/airflow/processes/cleanup.py',
