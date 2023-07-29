@@ -62,8 +62,8 @@ def parse_email(email_message):
 
 def process_unread_emails():
     '''
-    Incorporates previous functions to pull unread emails and save their content
-    as a parquet file with the date appended to the file name.
+    Connects to inbox and gathers unread emails, converts contents
+    of email(s) into a DataFrame and saves as a parquet file.
     '''
     mailbox = connect_and_login(GMAIL_ADDRESS, GMAIL_PASSWORD)
     unread_email_ids = get_unread_ids(mailbox)
