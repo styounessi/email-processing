@@ -10,7 +10,6 @@ GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
 GMAIL_SERVER = 'imap.gmail.com'
 
-
 # Current date, for appending to parquet file
 timestamp = datetime.datetime.now().strftime('%Y%m%d')
 
