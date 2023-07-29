@@ -42,7 +42,8 @@ with DAG(dag_id='email_processing',
 
 extract >> vader_sentiment >> insert
 
-# DAG for weekly parquet cleaner task. Same use of BashOperator as in previous DAG
+
+# DAG for weekly parquet cleaner task. Uses BashOperator to run .py cleaner
 with DAG(dag_id='parquet_cleaner', 
          default_args=default_args, 
          schedule_interval='@weekly', 
