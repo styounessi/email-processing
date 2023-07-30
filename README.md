@@ -73,7 +73,7 @@ It makes sense to use MongoDB for this project since the records are simple and 
 Processed and stored records will look like this example once they are inserted into the collection:
 
 ```
-_id: ObjectId("64c31ba93851089f36d47d67"),
+    _id: ObjectId("64c31ba93851089f36d47d67"),
     from: 'Jane Smith <feedbackgiver123@proton.me>',
     subject: 'Terrible service - very unhappy',
     body: 'Your product and customer service is awful. I will never buy again!!!!',
