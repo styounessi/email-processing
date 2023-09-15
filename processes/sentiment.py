@@ -6,9 +6,6 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 
-# Downloads vader lexicon if it does not exist locally
-nltk.download('vader_lexicon')
-
 # Path to parquet files
 PARQUET_FILE = '/opt/airflow/parquet/*.parquet'
 
@@ -47,15 +44,19 @@ def sentiment_analysis(df):
     Performs sentiment analysis on the "body" column of the DataFrame and
     adds the derived "sentiment" column for each email.
     '''
+    # Downloads vader lexicon if it does not exist locally
+    nltk.download('vader_lexicon')
+
     if {'sentiment'}.issubset(df.columns):
         print('File has already been processed for sentiment.')
         exit()
 
     sia = SentimentIntensityAnalyzer()
 
-    df = df.with_columns(pl.col('body').apply(lambda text: assign_sentiment \
-                                             (sia.polarity_scores(text) \
-                                             ['compound'])).alias('sentiment'))
+    df = df.with_columns(
+        pl.col('body')
+          .apply(lambda text: assign_sentiment(sia.polarity_scores(text)['compound']))
+          .alias('sentiment'))
     return df
 
 
