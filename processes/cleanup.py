@@ -4,21 +4,29 @@ import datetime
 
 
 # Path to parquet files
-PARQUET_FILE = '/opt/airflow/parquet/*.parquet'
+RAW_FILES = '/opt/airflow/parquet/raw_files/*.parquet'
+PROCESSED_FILES = '/opt/airflow/parquet/processed_files/*.parquet'
 
 
 # Default retention period is 7 days
 def parquet_cleaner(retention_days=7):
     '''
     Searches for parquet files older than the given retention
-    period and scrubs them from the folder.
+    period and scrubs them from the folders.
     '''
     today = datetime.date.today()
     retention_period = datetime.timedelta(days=retention_days)
 
-    files = glob.glob(PARQUET_FILE)
+    raw_files = glob.glob(RAW_FILES)
+    
+    for file in raw_files:
+        creation_date = datetime.date.fromtimestamp(os.path.getctime(file))
+        if (today - creation_date) > retention_period:
+            os.remove(file)
 
-    for file in files:
+    processed_files = glob.glob(PROCESSED_FILES)
+    
+    for file in processed_files:
         creation_date = datetime.date.fromtimestamp(os.path.getctime(file))
         if (today - creation_date) > retention_period:
             os.remove(file)
