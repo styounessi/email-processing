@@ -6,23 +6,23 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 
-# Path to parquet files
-PARQUET_FILE = '/opt/airflow/parquet/*.parquet'
+# Parquet file locations
+RAW_FILES = '/opt/airflow/parquet/raw_files/*.parquet'
+PROCESSED_FILES = '/opt/airflow/parquet/processed_files/*.parquet'
 
 
-def read_latest_file():
+def latest_parquet():
     '''
     Reads latest parquet file. Raises an error if no file is available.
     '''
-    files = glob.glob(PARQUET_FILE)
+    files = glob.glob(RAW_FILES)
 
     try:
         latest_file = max(files, key=os.path.getctime)
     except ValueError:
-        raise FileNotFoundError('No file found: Check folder contents.')
-    
-    df = pl.read_parquet(latest_file)
-    return df
+        raise FileNotFoundError('No new file available.')
+  
+    return latest_file
 
 
 def assign_sentiment(score):
@@ -38,35 +38,35 @@ def assign_sentiment(score):
         return 'Neutral'
 
 
-def sentiment_analysis(df):
+def sentiment_analysis():
     '''
-    Checks to see if the file has already been processed for sentiment.
-    Performs sentiment analysis on the "body" column of the DataFrame and
+    Performs sentiment analysis on the "body" column of the LazyFrame and
     adds the derived "sentiment" column for each email.
     '''
     # Downloads vader lexicon if it does not exist locally
     nltk.download('vader_lexicon')
 
-    if {'sentiment'}.issubset(df.columns):
-        print('File has already been processed for sentiment.')
-        exit()
+    lf = pl.scan_parquet(latest_parquet())
 
     sia = SentimentIntensityAnalyzer()
 
-    df = df.with_columns(
+    lf = lf.with_columns(
         pl.col('body')
-          .apply(lambda text: assign_sentiment(sia.polarity_scores(text)['compound']))
-          .alias('sentiment'))
-    return df
+          .map_elements(lambda text: assign_sentiment(sia.polarity_scores(text)['compound']))
+          .alias('sentiment')
+    ).collect(streaming=True)
+    
+    return lf
 
 
 def derive_and_save_sentiment():
     '''
     Derive sentiment from email(s) and save back to parquet file 
     '''
-    df = read_latest_file()
-    df = sentiment_analysis(df)
-    df.write_parquet(max(glob.glob(PARQUET_FILE), key=os.path.getctime))
+    filename = os.path.basename(latest_parquet())
+    lf = sentiment_analysis() 
+    lf.write_parquet(f'/opt/airflow/parquet/processed_files/{filename}')
+    
     print('Sentiment analysis completed for new emails.')
 
 
