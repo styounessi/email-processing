@@ -10,7 +10,8 @@ GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
 GMAIL_SERVER = 'imap.gmail.com'
 
-# Current date, for appending to parquet file
+
+# Current date, for appending to parquet filename
 timestamp = datetime.datetime.now().strftime('%Y%m%d')
 
 
@@ -44,7 +45,7 @@ def fetch_email_content(mail_host, email_id):
 
 def parse_email(email_message):
     '''
-    Parses the relevant information being sought from each email.
+    Parses for relevant information being sought from each email.
     '''
     sender = email_message['From']
     subject = email_message['Subject']
@@ -56,18 +57,23 @@ def parse_email(email_message):
             email_body = part.get_payload(decode=True).decode('utf-8').replace('\n\n', ' ')
             break
     
-    return {'from': sender, 'subject': subject, 'body': email_body, 'date': date_sent}
+    return {
+        'from': sender,
+        'subject': subject,
+        'body': email_body,
+        'date': date_sent
+    }
 
 
 def process_unread_emails():
     '''
     Connects to inbox and gathers unread emails, converts contents
-    of email(s) into a DataFrame and saves as a parquet file.
+    of email(s) into a LazyFrame and saves as a parquet file.
     '''
     mailbox = connect_and_login(GMAIL_ADDRESS, GMAIL_PASSWORD)
     unread_email_ids = get_unread_ids(mailbox)
     
-    # Exits if no unread emails are present. 
+    # Exits if there are no new unread emails
     if not unread_email_ids:
         print('No new unread emails to process.')
         mailbox.close()
@@ -80,9 +86,10 @@ def process_unread_emails():
         extracted_data = parse_email(email_data)
         data.append(extracted_data)
 
-    # Converts to Polars DataFrame and writes to parquet
-    df = pl.DataFrame(data)
-    df.write_parquet(f'/opt/airflow/parquet/emails_{timestamp}.parquet')
+    # Converts to Polars LazyFrame and writes to parquet
+    lf = pl.LazyFrame(data)
+    lf.sink_parquet(f'/opt/airflow/parquet/raw_files/emails_{timestamp}.parquet')
+    
     print('Unread emails processed and saved successfully.')
     
     mailbox.close()
