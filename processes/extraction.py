@@ -5,10 +5,10 @@ import datetime
 import polars as pl
 
 
-# Pull Gmail credentials via environment variables
+# Pull Gmail IMAP server & credentials via environment variables
+GMAIL_IMAP_SERVER = os.getenv('GMAIL_IMAP_SERVER')
 GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
-GMAIL_SERVER = 'imap.gmail.com'
 
 
 # Current date, for appending to parquet filename
@@ -19,7 +19,7 @@ def connect_and_login(username, password):
     '''
     Connects to Gmail mail server using given credentials.
     '''
-    mail_host = imaplib.IMAP4_SSL(GMAIL_SERVER)
+    mail_host = imaplib.IMAP4_SSL(GMAIL_IMAP_SERVER)
     mail_host.login(username, password)
     return mail_host
 
