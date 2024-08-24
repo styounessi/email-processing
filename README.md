@@ -80,3 +80,35 @@ Processed and stored records will look like this example once they are inserted 
     date: 'Wed, 14 Jun 2023 00:56:52 +0000',
     sentiment: 'Negative'
 ```
+### Environment Variable File 🔑
+
+This repository includes an `.env.example` file, which serves as a template for configuring environment variables related to Gmail and Airflow/Postgres. To use these variables, you'll need to rename this file to `.env` and enter values for the variables. The snippet below shows the complete structure of the file:
+
+```env
+# Incoming Mail (IMAP) server address for Gmail
+GMAIL_IMAP_SERVER=
+
+# Should contain the Gmail address used for reading and extracting inbox emails
+GMAIL_ADDRESS=
+
+# Please note that instead of a regular Gmail password, this variable should contain an "app code" instead
+# An app code is a secure way to authenticate an application without revealing the actual Gmail password
+# To create an app code, follow these steps:
+# 1. Go to your Google Account settings (https://myaccount.google.com/security)
+# 2. In the "Security" section, select "App passwords"
+# 3. Generate a new app password for your application, and use that generated code here
+GMAIL_PASSWORD=
+
+# Represents the user ID (UID) that the Airflow application will use. It is typically used for setting permissions
+# and access control
+AIRFLOW_UID=
+
+# Postgres service variables
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+
+# Airflow web interface credentials
+_AIRFLOW_WWW_USER_USERNAME=
+_AIRFLOW_WWW_USER_PASSWORD=
+```
